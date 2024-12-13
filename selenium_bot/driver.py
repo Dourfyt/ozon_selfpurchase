@@ -95,19 +95,19 @@ class OzonParse:
         self.__accept_cookies()
         self.__auth()
         self.__add_adress()
-        # cards = self.__search(self.keyword)
-        # self.__random_hover()
-        # self.__get_random_card(cards)
-        # self.__add_to_cart()
-        # self.driver.close()
-        # delay()
-        # tabs = self.driver.window_handles
-        # self.driver.switch_to.window(tabs[0])
-        # card = self.__search_card(self.article)
-        # self.__hover(card)
-        # self.__click(card)
-        # self.__switch_to_new_window()
-        self.driver.get("https://www.ozon.ru/product/vneshniy-akkumulyator-10000mah-poverbank-10000-mah-s-bystroy-zaryadkoy-power-bank-universalnyy-usb-1360123802/")
+        self.driver.switch_to.default_content()
+        cards = self.__search(self.keyword)
+        self.__random_hover()
+        self.__get_random_card(cards)
+        self.__add_to_cart()
+        self.driver.close()
+        delay()
+        tabs = self.driver.window_handles
+        self.driver.switch_to.window(tabs[0])
+        card = self.__search_card(self.article)
+        self.__hover(card)
+        self.__click(card)
+        self.__switch_to_new_window()
         self.__add_to_cart()
         delay()
         self.__go_to_pay()
@@ -220,6 +220,7 @@ class OzonParse:
             self.__hover(card)
             pyautogui.leftClick()
             pyautogui.leftClick()
+            sleep(1)
             self.__switch_to_new_window()
         except Exception as e:
             logger.error(f"Ошибка при получении рандомной карточки - {e}")
@@ -446,6 +447,7 @@ class OzonParse:
             print_exc()
         try:
             self.driver.switch_to.default_content()
+            sleep(2)
             try:
                 close = WebDriverWait(self.driver, 5).until(EC.visibility_of_element_located((By.XPATH, '//div[4]/button')))
                 self.__click(close)
@@ -521,7 +523,6 @@ class OzonParse:
                     
 def main():
     url = 'https://ozon.ru'
-    logger.level("SUCCESS")
     window_width = random.randint(1200, 1920)
     window_height = random.randint(850, 1080)
     columns_to_extract = ['Ключевое слово для поиска', 'Артикул', 'Адрес пвз', 'Промокод', 'Статус', 'Аккаунт с которого выполнен выкуп', 'Способ доставки (Курьером\Самовывоз)', "Квартира", "Подъезд","Этаж", "Домофон", "Комментарий курьеру"]
@@ -530,10 +531,10 @@ def main():
     
     wire_options = {
         'proxy': {
-            'http': f'http://127.0.0.1:60002',
-            'https': f'https://127.0.0.1:60002'
+            'https': 'https://9oERqg:NgAYyF@147.45.52.51:9424',
         }
     }
+
     
     for index, row in df_to_process.iterrows():
         retry_count = 3  # Максимальное количество попыток
@@ -545,7 +546,6 @@ def main():
                 options = webdriver.ChromeOptions()
                 ua = UserAgent()
                 user_agent = ua.random
-                options.add_argument(f"user-agent={user_agent}")
                 options.add_argument("--no-sandbox")
                 options.add_argument("--ignore-certificate-errors")
                 options.add_argument("--disable-geolocation")

@@ -28,7 +28,7 @@ class Phone():
 
     def get_phone(self):
         try:
-            resp = get(f"https://api.sms-activate.ae/stubs/handler_api.php?api_key={self.apiKey}&action=getNumberV2&service={self.service}&country={self.country}&maxPrice=20&userId=11472129").json()
+            resp = get(f"https://api.sms-activate.ae/stubs/handler_api.php?api_key={self.apiKey}&action=getNumberV2&service={self.service}&country={self.country}&operator=megafon&maxPrice=20&userId=11472129").json()
             self.number = resp["phoneNumber"]
             self.id = resp["activationId"]       
             return self.number
