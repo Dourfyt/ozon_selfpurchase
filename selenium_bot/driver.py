@@ -385,7 +385,12 @@ class OzonParse:
                 self.__click(courier)
                 sleep(2)
             try:
-                addres_clear = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(Locator.ADRESS_CLEAR))
+                addres_clear = WebDriverWait(self.driver, 5).until(EC.visibility_of_element_located((By.XPATH, '/html/body/div/div/div/div/div/div/div/div/div/div/div/div/div/div/div/div/form/div/div/fieldset/div/div/div/div/label/div/div/div/div/button')))
+                self.__click(addres_clear) 
+            except:
+                pass
+            try:
+                addres_clear = WebDriverWait(self.driver, 5).until(EC.visibility_of_element_located(Locator.ADRESS_CLEAR))
                 self.__click(addres_clear)
             except:
                 pass
